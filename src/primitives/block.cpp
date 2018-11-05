@@ -15,11 +15,14 @@
 
 uint256 CBlockHeader::GetHash() const
 {
+		/*
 		if(nTime > 1541444250){
 			return XEVAN(BEGIN(nVersion), END(nNonce));
 		} else {
 			return Hash(BEGIN(nVersion), END(nNonce));
 		}
+		*/
+		return XEVAN(BEGIN(nVersion), END(nNonce));
 }
 
 uint256 CBlock::BuildMerkleTree(bool* fMutated) const
