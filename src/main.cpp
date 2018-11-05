@@ -2120,13 +2120,15 @@ double ConvertBitsToDouble(unsigned int nBits)
 int64_t GetBlockValue(int nHeight)
 {
     int64_t nSubsidy = 0;
-    if (nHeight == 0) {
-      nSubsidy = 20000 * COIN;
-    } else if (nHeight == 1) {
+    if (nHeight == 1) {
       nSubsidy = 12000 * COIN;
-    } else if (nHeight <= 180 && nHeight > 2) {
+    } else if (nHeight <= 180 && nHeight > 1) {
       nSubsidy = 0 * COIN;
-    } else if (nHeight <= 14580 && nHeight > 180) {
+    } else if (nHeight <= 295 && nHeight > 180) {
+      nSubsidy = 1 * COIN;
+    } else if (nHeight <= 300 && nHeight > 295) {
+      nSubsidy = 1000 * COIN;
+    }else if (nHeight <= 14580 && nHeight > 300) {
       nSubsidy = 1 * COIN;
     } else if (nHeight <= 34740 && nHeight > 14580) {
       nSubsidy = 3 * COIN;

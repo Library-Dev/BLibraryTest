@@ -74,11 +74,11 @@ bool CheckProof(uint256 hash, unsigned int nBits)
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (    150, uint256("0x0000000032f43f39270c61931ab15a3fbfa8e2781854cbbd2c2197462012edf9"))
-    (   1200, uint256("0x0000000209f4ac6bbb482dd625d51e897ebec1517b85c86baa36bdca2f73b757"));
+    (    10, uint256("0x000000d98ea5437c3d9b30ab887199d7d858a1248e1b2bf7295beb72b3bc153e"))
+    (   1200, uint256("0x0000a889d07573401bf0e02e37634bb94841c52769ae83db2f8f0b7133e678a9"));
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1541437828, // * UNIX timestamp of last checkpoint block
+    1541323537, // * UNIX timestamp of last checkpoint block
     0,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     0        // * estimated number of transactions per day after checkpoint
