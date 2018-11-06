@@ -18,7 +18,11 @@ uint256 CBlockHeader::GetHash() const
 	if(nVersion < 4) {
 		return XEVAN(BEGIN(nVersion), END(nNonce));
 	} else {
-		return Hash(BEGIN(nVersion), END(nAccumulatorCheckpoint));
+		if(nTime > 1541475448) {
+			return XEVAN(BEGIN(nVersion), END(nNonce));
+		} else {
+			return Hash(BEGIN(nVersion), END(nAccumulatorCheckpoint));
+		}
 	}
 }
 
