@@ -58,22 +58,24 @@ struct CBlockTemplate;
 struct CNodeStateStats;
 
 inline int64_t GetMstrNodCollateral(int nHeight){
-    int64_t nCol;
 
+  int64_t nCol;
+  nCol = 1000;
+  int nHalvingInterval = 4800;
+
+  if(nHeight >= 0 && nHeight < 34740) {
     nCol = 1000;
+  } else if(nHeight >= 34741 && nHeight < 70740) {
+    nCol = 1500;
+  } else if(nHeight >= 70741 && nHeight < 106740) {
+    nCol = 3000;
+  } else if(nHeight >= 106741 && nHeight < 214740) {
+    nCol = 5000;
+  } else if(nHeight >= 214740) {
+    nCol = 6000;
+  }
 
-    if(nHeight >= 0 && nHeight < 34740) {
-      nCol = 1000;
-    } else if(nHeight >= 34741 && nHeight < 70740) {
-      nCol = 1500;
-    } else if(nHeight >= 70741 && nHeight < 106740) {
-      nCol = 3000;
-    } else if(nHeight >= 106741 && nHeight < 214740) {
-      nCol = 5000;
-    } else if(nHeight >= 214740) {
-      nCol = 6000;
-    }
-    
+  return nCol;
 }
 /** Default for -blockmaxsize and -blockminsize, which control the range of sizes the mining code will create **/
 static const unsigned int DEFAULT_BLOCK_MAX_SIZE = 750000;
@@ -102,7 +104,7 @@ static const unsigned int BLOCKFILE_CHUNK_SIZE = 0x1000000; // 16 MiB
 /** The pre-allocation chunk size for rev?????.dat files (since 0.8) */
 static const unsigned int UNDOFILE_CHUNK_SIZE = 0x100000; // 1 MiB
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
-static const int COINBASE_MATURITY = 50;
+static const int COINBASE_MATURITY = 49;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 /** Maximum number of script-checking threads allowed */

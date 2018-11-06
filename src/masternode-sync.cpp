@@ -144,18 +144,18 @@ void CMasternodeSync::GetNextAsset()
     case (MASTERNODE_SYNC_INITIAL):
     case (MASTERNODE_SYNC_FAILED): // should never be used here actually, use Reset() instead
         ClearFulfilledRequest();
+        LogPrintf("CMasternodeSync::GetNextAsset - MASTERNODE_SYNC_SPORKS\n");
         RequestedMasternodeAssets = MASTERNODE_SYNC_SPORKS;
         break;
     case (MASTERNODE_SYNC_SPORKS):
+        LogPrintf("CMasternodeSync::GetNextAsset - MASTERNODE_SYNC_LIST\n");
         RequestedMasternodeAssets = MASTERNODE_SYNC_LIST;
         break;
     case (MASTERNODE_SYNC_LIST):
+        LogPrintf("CMasternodeSync::GetNextAsset - MASTERNODE_SYNC_MNW\n");
         RequestedMasternodeAssets = MASTERNODE_SYNC_MNW;
         break;
     case (MASTERNODE_SYNC_MNW):
-        RequestedMasternodeAssets = MASTERNODE_SYNC_BUDGET;
-        break;
-    case (MASTERNODE_SYNC_BUDGET):
         LogPrintf("CMasternodeSync::GetNextAsset - Sync has finished\n");
         RequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
         break;
@@ -175,8 +175,6 @@ std::string CMasternodeSync::GetSyncStatus()
         return _("Synchronizing masternodes...");
     case MASTERNODE_SYNC_MNW:
         return _("Synchronizing masternode winners...");
-    case MASTERNODE_SYNC_BUDGET:
-        return _("Synchronizing budgets...");
     case MASTERNODE_SYNC_FAILED:
         return _("Synchronization failed");
     case MASTERNODE_SYNC_FINISHED:
@@ -318,7 +316,7 @@ void CMasternodeSync::Process()
                 if (lastMasternodeList == 0 &&
                     (RequestedMasternodeAttempt >= MASTERNODE_SYNC_THRESHOLD * 3 || GetTime() - nAssetSyncStarted > MASTERNODE_SYNC_TIMEOUT * 5)) {
                     if (IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)) {
-                        LogPrintf("CMasternodeSync::Process - ERROR - Sync has failed, will retry later\n");
+                        LogPrintf("CMasternodeSync::Process - (MASTERNODE_SYNC_LIST) ERROR - Sync has failed, will retry later\n");
                         RequestedMasternodeAssets = MASTERNODE_SYNC_FAILED;
                         RequestedMasternodeAttempt = 0;
                         lastFailure = GetTime();
@@ -349,7 +347,7 @@ void CMasternodeSync::Process()
                 if (lastMasternodeWinner == 0 &&
                     (RequestedMasternodeAttempt >= MASTERNODE_SYNC_THRESHOLD * 3 || GetTime() - nAssetSyncStarted > MASTERNODE_SYNC_TIMEOUT * 5)) {
                     if (IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)) {
-                        LogPrintf("CMasternodeSync::Process - ERROR - Sync has failed, will retry later\n");
+                        LogPrintf("CMasternodeSync::Process - (MASTERNODE_SYNC_MNW) ERROR - Sync has failed, will retry later\n");
                         RequestedMasternodeAssets = MASTERNODE_SYNC_FAILED;
                         RequestedMasternodeAttempt = 0;
                         lastFailure = GetTime();

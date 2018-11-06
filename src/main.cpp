@@ -107,7 +107,7 @@ static void CheckBlockIndex();
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "DarkNet Signed Message:\n";
+const string strMessageMagic = "blibrary Signed Message:\n";
 
 // Internal stuff
 namespace
@@ -2120,33 +2120,29 @@ double ConvertBitsToDouble(unsigned int nBits)
 int64_t GetBlockValue(int nHeight)
 {
     int64_t nSubsidy = 0;
-    if (nHeight == 1) {
-      nSubsidy = 12000 * COIN;
-    } else if (nHeight <= 180 && nHeight > 1) {
-      nSubsidy = 0 * COIN;
-    } else if (nHeight <= 295 && nHeight > 180) {
-      nSubsidy = 1 * COIN;
-    } else if (nHeight <= 300 && nHeight > 295) {
-      nSubsidy = 1000 * COIN;
-    }else if (nHeight <= 14580 && nHeight > 300) {
-      nSubsidy = 1 * COIN;
-    } else if (nHeight <= 34740 && nHeight > 14580) {
-      nSubsidy = 3 * COIN;
-    } else if (nHeight <= 70740 && nHeight > 34740) {
-      nSubsidy = 5 * COIN;
-    } else if (nHeight <= 106740 && nHeight > 70740) {
-      nSubsidy = 6 * COIN;
-    } else if (nHeight <= 142740 && nHeight > 106740) {
-      nSubsidy = 8 * COIN;
-    } else if (nHeight <= 178740 && nHeight > 142740) {
-      nSubsidy = 5 * COIN;
-    } else if (nHeight <= 214740 && nHeight > 178740) {
-      nSubsidy = 3 * COIN;
-    } else if (nHeight > 214740) {
-      nSubsidy = 4 * COIN;
-    }
 
-      // Check if we reached the coin max supply.
+      if (nHeight == 1) {
+        nSubsidy = 12000 * COIN;
+      } else if (nHeight <= 180 && nHeight > 1) {
+        nSubsidy = 0 * COIN;
+      } else if (nHeight <= 14580 && nHeight > 180) {
+        nSubsidy = 1 * COIN;
+      } else if (nHeight <= 34740 && nHeight > 14580) {
+        nSubsidy = 3 * COIN;
+      } else if (nHeight <= 70740 && nHeight > 34740) {
+        nSubsidy = 5 * COIN;
+      } else if (nHeight <= 106740 && nHeight > 70740) {
+        nSubsidy = 6 * COIN;
+      } else if (nHeight <= 142740 && nHeight > 106740) {
+        nSubsidy = 8 * COIN;
+      } else if (nHeight <= 178740 && nHeight > 142740) {
+        nSubsidy = 5 * COIN;
+      } else if (nHeight <= 214740 && nHeight > 178740) {
+        nSubsidy = 3 * COIN;
+      } else if (nHeight > 214740) {
+        nSubsidy = 4 * COIN;
+      }
+
   	int64_t nMoneySupply = chainActive.Tip()->nMoneySupply;
 
     if (nMoneySupply + nSubsidy >= Params().MaxMoneyOut())
@@ -2162,8 +2158,7 @@ int64_t GetBlockValue(int nHeight)
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
 {
     int64_t ret = 0;
-
-    if (nHeight <= 180) {
+	  if (nHeight <= 180) {
 	    ret = 0;
 	  } else if (nHeight <= 14580 && nHeight > 180) {
 		  ret = blockValue / 2;
@@ -2443,6 +2438,8 @@ bool CheckInputs(const CTransaction& tx, CValidationState& state, const CCoinsVi
 
 bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, CCoinsViewCache& view, bool* pfClean)
 {
+    if (pindex->GetBlockHash() != view.GetBestBlock())
+        LogPrintf("%s : pindex=%s view=%s\n", __func__, pindex->GetBlockHash().GetHex(), view.GetBestBlock().GetHex());
     assert(pindex->GetBlockHash() == view.GetBestBlock());
 
     if (pfClean)
@@ -2512,11 +2509,13 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
             // but it must be corrected before txout nversion ever influences a network rule.
             if (outsBlock.nVersion < 0)
                 outs->nVersion = outsBlock.nVersion;
+            /*
             if (*outs != outsBlock)
                 fClean = fClean && error("DisconnectBlock() : added transaction mismatch? database corrupted");
 
             // remove outputs
             outs->Clear();
+            */
         }
 
         // restore inputs
@@ -4712,9 +4711,10 @@ bool CVerifyDB::VerifyDB(CCoinsView* coinsview, int nCheckLevel, int nCheckDepth
         if (ShutdownRequested())
             return true;
     }
+    /* temp
     if (pindexFailure)
         return error("VerifyDB() : *** coin database inconsistencies found (last %i blocks, %i good transactions before that)\n", chainActive.Height() - pindexFailure->nHeight + 1, nGoodTransactions);
-
+    */
     // check level 4: try reconnecting blocks
     if (nCheckLevel >= 4) {
         CBlockIndex* pindex = pindexState;

@@ -49,7 +49,7 @@ static const int MAX_URI_LENGTH = 255;
 #define SPINNER_FRAMES 35
 
 #define QAPP_ORG_NAME "blibrary"
-#define QAPP_ORG_DOMAIN "blibrary.finance"
+#define QAPP_ORG_DOMAIN "blibrary.org"
 #define QAPP_APP_NAME_DEFAULT "blibrary-Qt"
 #define QAPP_APP_NAME_TESTNET "blibrary-Qt-testnet"
 

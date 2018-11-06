@@ -22,9 +22,9 @@ Build-Depends: debhelper,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler
 Standards-Version: 3.9.2
-Homepage: http://www.blibrary.finance
-Vcs-Git: git://github.com/blockchain-library/BLibrary.git
-Vcs-Browser: http://github.com/blockchain-library/BLibrary
+Homepage: http://www.blibrary.org
+Vcs-Git: git://github.com/blibraryTeam/blibraryCore.git
+Vcs-Browser: http://github.com/blibraryTeam/blibraryCore
 
 Package: blibraryd
 Architecture: any

@@ -1793,7 +1793,7 @@ bool AppInit2(boost::thread_group& threadGroup)
        10blibrary+10000 == (1blibrary+1000)*10
     */
     obfuScationDenominations.push_back((10000 * COIN) + 10000000);
-    obfuScationDenominations.push_back((GetMstrNodCollateral(chainActive.Height())*COIN) + 1000000);
+    obfuScationDenominations.push_back((1000 * COIN) + 1000000);
     obfuScationDenominations.push_back((100 * COIN) + 100000);
     obfuScationDenominations.push_back((10 * COIN) + 10000);
     obfuScationDenominations.push_back((1 * COIN) + 1000);

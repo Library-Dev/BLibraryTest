@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/blockchain-library/BLibrary-detached-sigs.git"
+- "url": "https://github.com/blibraryTeam/blibraryCore-detached-sigs.git"
   "dir": "signature"
 files:
 - "blibrary-osx-unsigned.tar.gz"

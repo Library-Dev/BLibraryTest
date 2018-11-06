@@ -68,7 +68,7 @@ Output:
     "Yeas" : 0,
     "Nays" : 0,
     "Abstains" : 0,
-    "TotalPayment" : 14400.00000000,
+    "TotalPayment" : 33600.00000000,
     "MonthlyPayment" : 1200.00000000,
     "IsValid" : true,
     "fValid" : true
@@ -112,7 +112,7 @@ Output:
 	    "Yeas" : 33,
 	    "Nays" : 0,
 	    "Abstains" : 0,
-	    "TotalPayment" : 14400.00000000,
+	    "TotalPayment" : 33600.00000000,
 	    "MonthlyPayment" : 1200.00000000,
 	    "IsValid" : true,
 	    "fValid" : true

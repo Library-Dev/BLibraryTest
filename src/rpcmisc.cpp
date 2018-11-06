@@ -66,6 +66,7 @@ Value getinfo(const Array& params, bool fHelp)
             "  \"difficulty\": xxxxxx,       (numeric) the current difficulty\n"
             "  \"testnet\": true|false,      (boolean) if the server is using testnet or not\n"
             "  \"moneysupply\" : \"supply\"       (numeric) The money supply when this block was added to the blockchain\n"
+            "  \"collateral\": \"xxxxxxx\"           masternode collateral\n"
             "  \"zblibsupply\" :\n"
             "  {\n"
             "     \"1\" : n,            (numeric) supply of 1 zblib denomination\n"
@@ -109,13 +110,14 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("difficulty", (double)GetDifficulty()));
     obj.push_back(Pair("testnet", Params().TestnetToBeDeprecatedFieldRPC()));
     obj.push_back(Pair("moneysupply",ValueFromAmount(chainActive.Tip()->nMoneySupply)));
+    obj.push_back(Pair("collateral", GetMstrNodCollateral((int)chainActive.Height())));
     Object zblibraryObj;
     for (auto denom : libzerocoin::zerocoinDenomList) {
         zblibraryObj.push_back(Pair(to_string(denom), ValueFromAmount(chainActive.Tip()->mapZerocoinSupply.at(denom) * (denom*COIN))));
     }
     zblibraryObj.emplace_back(Pair("total", ValueFromAmount(chainActive.Tip()->GetZerocoinSupply())));
     obj.emplace_back(Pair("zblibsupply", zblibraryObj));
-    
+
 #ifdef ENABLE_WALLET
     if (pwalletMain) {
         obj.push_back(Pair("keypoololdest", pwalletMain->GetOldestKeyPoolTime()));
@@ -133,6 +135,7 @@ Value getinfo(const Array& params, bool fHelp)
         nStaking = true;
     obj.push_back(Pair("staking status", (nStaking ? "Staking Active" : "Staking Not Active")));
     obj.push_back(Pair("errors", GetWarnings("statusbar")));
+
     return obj;
 }
 
